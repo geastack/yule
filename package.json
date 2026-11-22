@@ -1,0 +1,114 @@
+{
+  "name": "yule",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Twenty-seven Christmas snow globes on the Waveshare ESP32-S3 Touch AMOLED 2.06, in TypeScript with GeaStack.",
+  "license": "GPL-3.0-only",
+  "type": "module",
+  "scripts": {
+    "dev": "gea simulate --width 410 --height 502 --dpr 1",
+    "flash": "gea run --board amoled",
+    "check": "tsc --noEmit && biome check",
+    "format": "biome format --write",
+    "bake": "node scripts/bake.mjs",
+    "push": "sh scripts/push.sh"
+  },
+  "dependencies": {
+    "@geastack/core": "0.1.41"
+  },
+  "devDependencies": {
+    "@biomejs/biome": "2.5.14",
+    "@geastack/cli": "0.1.102",
+    "@geastack/compiler": "1.0.33",
+    "@geastack/geatsc-plugin-gea": "0.1.22",
+    "@geastack/targets": "0.1.102",
+    "sharp": "0.35.5",
+    "typescript": "5.9.3",
+    "vite": "8.3.2"
+  },
+  "gea": {
+    "id": "yule",
+    "name": "Yule",
+    "entry": "src/index.tsx",
+    "targets": {
+      "web": true,
+      "esp32": {
+        "boards": {
+          "esp32-s3-touch-amoled-2.06": {
+            "build": {
+              "display": {
+                "flushPoolBytes": 32800
+              }
+            }
+          }
+        }
+      }
+    },
+    "webPreload": [
+      {
+        "source": ".gea/sd/yule",
+        "target": "/sdcard/yule"
+      }
+    ],
+    "embeddedAssets": {
+      "compileTimeOnly": [
+        "art/backdrop.png",
+        "art/globes/aurora.jpg",
+        "art/globes/bear-puppy.jpg",
+        "art/globes/cabin-classic.jpg",
+        "art/globes/camp.jpg",
+        "art/globes/cardinals.jpg",
+        "art/globes/carousel.jpg",
+        "art/globes/castle.jpg",
+        "art/globes/chapel.jpg",
+        "art/globes/ferris-wheel.jpg",
+        "art/globes/gingerbread.jpg",
+        "art/globes/ice-stage.jpg",
+        "art/globes/lighthouse.jpg",
+        "art/globes/neon.jpg",
+        "art/globes/nordic.jpg",
+        "art/globes/penguins.jpg",
+        "art/globes/pixel.jpg",
+        "art/globes/polar-cub.jpg",
+        "art/globes/roses.jpg",
+        "art/globes/santa-fishing.jpg",
+        "art/globes/santa-rocking.jpg",
+        "art/globes/sleigh.jpg",
+        "art/globes/snowmen.jpg",
+        "art/globes/toytown.jpg",
+        "art/globes/tree-farm.jpg",
+        "art/globes/viaduct.jpg",
+        "art/globes/woodland-tree.jpg",
+        "docs/aurora.jpg",
+        "docs/banner.jpg",
+        "docs/bear-puppy.jpg",
+        "docs/cabin-classic.jpg",
+        "docs/camp.jpg",
+        "docs/cardinals.jpg",
+        "docs/carousel.jpg",
+        "docs/castle.jpg",
+        "docs/chapel.jpg",
+        "docs/ferris-wheel.jpg",
+        "docs/gingerbread.jpg",
+        "docs/ice-stage.jpg",
+        "docs/lighthouse.jpg",
+        "docs/neon.jpg",
+        "docs/nordic.jpg",
+        "docs/penguins.jpg",
+        "docs/pixel.jpg",
+        "docs/polar-cub.jpg",
+        "docs/roses.jpg",
+        "docs/santa-fishing.jpg",
+        "docs/santa-rocking.jpg",
+        "docs/sleigh.jpg",
+        "docs/snowmen.jpg",
+        "docs/toytown.jpg",
+        "docs/tree-farm.jpg",
+        "docs/viaduct.jpg",
+        "docs/woodland-tree.jpg",
+        "docs/yule.jpg"
+      ]
+    },
+    "cssDevicePixelRatio": 1
+  }
+}

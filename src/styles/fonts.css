@@ -1,0 +1,16 @@
+/* Hanken Grotesk, one family name per weight (SIL OFL 1.1, see fonts/OFL.txt). */
+
+@font-face {
+  font-family: "Hanken";
+  src: url("../fonts/HankenGrotesk-Regular.ttf");
+}
+
+@font-face {
+  font-family: "Hanken SB";
+  src: url("../fonts/HankenGrotesk-SemiBold.ttf");
+}
+
+@font-face {
+  font-family: "Hanken XB";
+  src: url("../fonts/HankenGrotesk-ExtraBold.ttf");
+}

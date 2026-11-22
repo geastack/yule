@@ -1,0 +1,27 @@
+/*
+ * Yule: the globe's canvas fills the panel; the menu pages cover it in
+ * midnight blue with candle-gold accents. Every colour sits on the RGB565
+ * grid (R and B multiples of 8, G of 4) so the panel shows it exactly.
+ *
+ * The root draws nothing itself (no background, no clip), so the canvas
+ * presents straight to the display.
+ */
+
+.app {
+  position: relative;
+  --bg: #080c18;
+  --surface: #101828;
+  --line: #202c40;
+  --text: #f8f0e0;
+  --text-2: #98a4b8;
+  --gold: #f8c058;
+  --gold-pressed: #f8dc98;
+  --chosen: #20283c;
+  --pressed: #303c58;
+  --ink: #181008;
+}
+
+.globe {
+  width: 100%;
+  height: 100%;
+}

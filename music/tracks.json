@@ -1,0 +1,101 @@
+[
+  {
+    "file": "01-jingle-bells.raw",
+    "title": "Jingle Bells",
+    "artist": "Kevin MacLeod (incompetech.com)",
+    "seconds": 100.4,
+    "license": "CC BY 3.0 (https://creativecommons.org/licenses/by/3.0/)",
+    "source": "https://commons.wikimedia.org/wiki/File:Jingle_Bells_(ISRC_USUAN1100187).mp3",
+    "attribution": "Jingle Bells Kevin MacLeod (incompetech.com) Licensed under Creative Commons: By Attribution 3.0 License https://creativecommons.org/licenses/by/3.0/ (trimmed, resampled to 16 kHz mono, loudness-normalised)"
+  },
+  {
+    "file": "02-good-king-wenceslas.raw",
+    "title": "Good King Wenceslas",
+    "artist": "United States Air Force Band, Concert Band",
+    "seconds": 37.9,
+    "license": "Public domain (US government work, US Air Force)",
+    "source": "https://commons.wikimedia.org/wiki/File:Good_King_Wenceslas_-_Concert_Band_-_United_States_Air_Force_Band.mp3",
+    "attribution": ""
+  },
+  {
+    "file": "03-sugar-plum-fairy.raw",
+    "title": "Dance of the Sugar Plum Fairy",
+    "artist": "Kevin MacLeod (incompetech.com)",
+    "seconds": 102.8,
+    "license": "CC BY 3.0 (https://creativecommons.org/licenses/by/3.0/)",
+    "source": "https://commons.wikimedia.org/wiki/File:Dance_of_the_Sugar_Plum_Fairies_(ISRC_USUAN1100270).mp3",
+    "attribution": "Dance of the Sugar Plum Fairies Kevin MacLeod (incompetech.com) Licensed under Creative Commons: By Attribution 3.0 License https://creativecommons.org/licenses/by/3.0/ (trimmed, resampled to 16 kHz mono, loudness-normalised)"
+  },
+  {
+    "file": "04-silent-night.raw",
+    "title": "Silent Night",
+    "artist": "United States Air Force Band of the Rockies, Concert Band",
+    "seconds": 149.1,
+    "license": "Public domain (US government work, US Air Force)",
+    "source": "https://commons.wikimedia.org/wiki/File:Silent_Nights_-_Concert_Band_-_United_States_Air_Force_Band_of_the_Rockies.mp3",
+    "attribution": ""
+  },
+  {
+    "file": "05-carol-of-the-bells.raw",
+    "title": "Carol of the Bells",
+    "artist": "United States Air Force Band of the Rockies, Concert Band",
+    "seconds": 160.3,
+    "license": "Public domain (US government work, US Air Force)",
+    "source": "https://commons.wikimedia.org/wiki/File:Carol_of_the_Bells_-_Concert_Band_-_United_States_Air_Force_Band_of_the_Rockies.mp3",
+    "attribution": ""
+  },
+  {
+    "file": "06-waltz-of-the-flowers.raw",
+    "title": "Waltz of the Flowers",
+    "artist": "United States Air Force Band, Concert Band",
+    "seconds": 240.0,
+    "license": "Public domain (US government work, US Air Force)",
+    "source": "https://commons.wikimedia.org/wiki/File:Waltz_of_the_Flowers_-_Concert_Band_-_United_States_Air_Force_Band.mp3",
+    "attribution": ""
+  },
+  {
+    "file": "07-we-three-kings.raw",
+    "title": "We Three Kings",
+    "artist": "United States Air Force Band, Concert Band",
+    "seconds": 98.6,
+    "license": "Public domain (US government work, US Air Force)",
+    "source": "https://commons.wikimedia.org/wiki/File:We_Three_Kings_of_Orient_Are_-_Concert_Band_-_United_States_Air_Force_Band.mp3",
+    "attribution": ""
+  },
+  {
+    "file": "08-bells-of-speyer.raw",
+    "title": "The Merry Bells of Speyer",
+    "artist": "United States Air Force Band of the Rockies, Stellar Brass",
+    "seconds": 74.1,
+    "license": "Public domain (US government work, US Air Force)",
+    "source": "https://commons.wikimedia.org/wiki/File:The_Merry_Bells_of_Speyer_-_Stellar_Brass_-_United_States_Air_Force_Band_of_the_Rockies.mp3",
+    "attribution": ""
+  },
+  {
+    "file": "09-carol-medley.raw",
+    "title": "Celebration of Carols (medley)",
+    "artist": "United States Air Force Band of the Rockies, Concert Band",
+    "seconds": 230.1,
+    "license": "Public domain (US government work, US Air Force)",
+    "source": "https://commons.wikimedia.org/wiki/File:Celebration_of_Carols_-_Concert_Band_-_United_States_Air_Force_Band_of_the_Rockies.mp3",
+    "attribution": ""
+  },
+  {
+    "file": "10-o-holy-night.raw",
+    "title": "O Holy Night",
+    "artist": "United States Air Force Band of the Golden West, Concert Band",
+    "seconds": 237.9,
+    "license": "Public domain (US government work, US Air Force)",
+    "source": "https://commons.wikimedia.org/wiki/File:Cantique_de_No%C3%ABl_(O_Holy_Night)_-_Concert_Band_-_United_States_Air_Force_Band_of_the_Golden_West.mp3",
+    "attribution": ""
+  },
+  {
+    "file": "11-we-wish-you.raw",
+    "title": "We Wish You a Merry Christmas",
+    "artist": "Kevin MacLeod (incompetech.com)",
+    "seconds": 129.3,
+    "license": "CC BY 3.0 (https://creativecommons.org/licenses/by/3.0/)",
+    "source": "https://commons.wikimedia.org/wiki/File:We_Wish_you_a_Merry_Christmas_(ISRC_USUAN1100369).mp3",
+    "attribution": "We Wish you a Merry Christmas Kevin MacLeod (incompetech.com) Licensed under Creative Commons: By Attribution 3.0 License https://creativecommons.org/licenses/by/3.0/ (trimmed, resampled to 16 kHz mono, loudness-normalised)"
+  }
+]
