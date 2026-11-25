@@ -22,7 +22,7 @@
     "@geastack/cli": "0.1.127",
     "@geastack/compiler": "1.0.64",
     "@geastack/geatsc-plugin-gea": "0.1.29",
-    "@geastack/targets": "0.1.102",
+    "@geastack/targets": "0.1.124",
     "sharp": "0.35.5",
     "typescript": "5.9.3",
     "vite": "8.3.2"
