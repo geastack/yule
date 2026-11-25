@@ -4,6 +4,7 @@ import {
   type GeaEmbeddedImage,
   type ImageData565,
   loadAssetImage,
+  Profiler,
   readCacheFile,
 } from "@geastack/core";
 import { BACKDROP, WINDOW_X, WINDOW_Y } from "../data/backdrop";
@@ -102,12 +103,13 @@ class Yule {
   private paused = false;
   private sinceCycle = 0;
   private unsaved = false; // a globe just shown, to save again (settings.resave)
+  private profileFrames = 0;
+  private readonly profileUs = new Float64Array(9);
 
   start() {
     settings.load();
     this.motion.start();
     this.snow.init();
-    this.water.init();
     this.smoke.init();
     this.stars.init();
     this.lights.prepare();
@@ -179,6 +181,7 @@ class Yule {
     this.lastY = y;
     this.downMs = Date.now();
     this.moved = 0;
+    if (y < BASE_TOP) this.snow.stir(x - WINDOW_X, y - WINDOW_Y, 0, -2);
     this.music.wake();
   }
 
@@ -187,6 +190,7 @@ class Yule {
 
     const dx = x - this.lastX;
     const dy = y - this.lastY;
+    this.snow.stir(x - WINDOW_X, y - WINDOW_Y, dx, dy);
     this.moved += Math.abs(dx) + Math.abs(dy);
     this.water.drag(dx, dy, x - WINDOW_X - CENTRE_X, y - WINDOW_Y - CENTRE_Y);
     this.lastX = x;
@@ -268,29 +272,53 @@ class Yule {
     const motion = this.motion;
     const wind = this.wind;
     const water = this.water;
+    const startUs = Profiler.nowUs();
     motion.read(dt);
     water.step(dt, motion);
     wind.step(dt);
     water.blow(wind.gust, dt);
     this.sway.step(dt, wind);
+    const beforeSnow = Profiler.nowUs();
     this.snow.step(dt, motion, water, wind);
+    const afterSnow = Profiler.nowUs();
     this.smoke.step(dt, motion, water, wind);
     this.lights.step(dt);
     this.stars.step(dt);
     this.music.update(dt, motion.wind);
+    const beforeSwayDraw = Profiler.nowUs();
+    if (this.snow.restoreDeposits(painter)) this.sway.forget();
     // Swaying rows change the settled picture; the restore picks them up.
     this.sway.draw(painter);
+    const beforeRestore = Profiler.nowUs();
     painter.restore();
+    const afterRestore = Profiler.nowUs();
     this.stars.draw(painter);
     this.lights.drawBehind(painter, this.sway);
     this.smoke.draw(painter);
-    this.snow.draw(painter, dt);
-    if (this.snow.resettled) {
-      this.sway.forget();
-      this.snow.resettled = false;
-    }
+    const beforeDraw = Profiler.nowUs();
+    this.snow.draw(painter);
+    const afterDraw = Profiler.nowUs();
     this.lights.drawFront(painter, motion, dt);
+    const beforePresent = Profiler.nowUs();
     screen.present();
+    this.profileUs[0] += beforeSnow - startUs;
+    this.profileUs[1] += afterSnow - beforeSnow;
+    this.profileUs[2] += beforeSwayDraw - afterSnow;
+    this.profileUs[3] += afterDraw - beforeDraw;
+    this.profileUs[4] += beforePresent - afterDraw;
+    this.profileUs[5] += Profiler.nowUs() - beforePresent;
+    this.profileUs[6] += beforeRestore - beforeSwayDraw;
+    this.profileUs[7] += afterRestore - beforeRestore;
+    this.profileUs[8] += beforeDraw - afterRestore;
+    this.profileFrames++;
+    if (this.profileFrames === 30) {
+      const p = this.profileUs;
+      console.log(
+        `yule profile us: motion=${Math.round(p[0] / 30)} physics=${Math.round(p[1] / 30)} update=${Math.round(p[2] / 30)} draw=${Math.round(p[3] / 30)} front=${Math.round(p[4] / 30)} present=${Math.round(p[5] / 30)} sway=${Math.round(p[6] / 30)} restore=${Math.round(p[7] / 30)} backdrop=${Math.round(p[8] / 30)}`,
+      );
+      p.fill(0);
+      this.profileFrames = 0;
+    }
     requestAnimationFrame(this.tick);
   }
 

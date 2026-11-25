@@ -71,11 +71,13 @@ export class Sway {
   // Rewrites the rows whose shift changed, in the settled picture.
   draw(painter: Painter) {
     for (let k = 0; k < this.count; k++) {
-      const top = this.top[k];
-      const bottom = this.bottom[k];
+      const top: i32 = this.top[k];
+      const bottom: i32 = this.bottom[k];
       const height = bottom - top;
-      for (let y = top; y <= bottom; y++) {
-        const shift = Math.round((this.bend[k] * (bottom - y)) / height);
+      if (height <= 0) continue;
+      const perRow: i32 = Math.round((this.bend[k] * 4096) / height);
+      for (let y: i32 = top; y <= bottom; y++) {
+        const shift: i32 = (perRow * (bottom - y) + 2048) >> 12;
         const at = k * HEIGHT + y;
         if (shift === this.shifts[at]) continue;
 

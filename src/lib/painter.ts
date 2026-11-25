@@ -4,12 +4,60 @@ import { HEIGHT, PIXELS, SPREAD, WIDTH } from "./frame";
 // them to 32-bit integer code, where plain numbers would be software doubles.
 
 const MAX_MARKS = 4096;
-const MAX_POINTS = 4096;
-// Drawn pieces (a 3 x 3 chip counts twice) beyond which restoring the whole
-// window at once is cheaper.
-const BUSY = 900;
+// Above this many sprites, restore the whole window at once.
+const BUSY = 128;
 // Sub-pixel phases per axis a sprite is pre-rendered at.
 export const PHASES = 4;
+
+declare function stampSnowBatch(
+  pixels: Uint16Array,
+  settledPixels: Uint16Array,
+  spans: Uint8Array,
+  sizes: Int32Array,
+  offsets: Int32Array,
+  ids: Int32Array,
+  x: Int32Array,
+  y: Int32Array,
+  dirtyTiles: Uint32Array,
+  count: i32,
+  width: i32,
+  height: i32,
+  colour: i32,
+  settles: boolean,
+): void;
+
+declare function restoreSnowTiles(pixels: Uint16Array, settled: Uint16Array, tiles: Uint32Array): void;
+
+declare function restoreMarks(
+  pixels: Uint16Array,
+  backdrop: Uint16Array,
+  marks: Int32Array,
+  count: i32,
+  stride: i32,
+): void;
+declare function glowSprite(
+  pixels: Uint16Array,
+  coverage: Uint8Array,
+  at: i32,
+  start: i32,
+  size: i32,
+  stride: i32,
+  r: i32,
+  g: i32,
+  b: i32,
+  strength: i32,
+): void;
+
+declare function blendSprite(
+  pixels: Uint16Array,
+  coverage: Uint8Array,
+  at: i32,
+  start: i32,
+  size: i32,
+  stride: i32,
+  colour: i32,
+  strength: i32,
+): void;
 
 // Soft round sprites, pre-rendered at PHASES x PHASES sub-pixel offsets as
 // 0..255 coverage, so a moving flake glides instead of stepping a pixel.
@@ -18,8 +66,15 @@ export class Sprites {
   readonly sizes = new Int32Array(64);
   // Where each sprite's phase (0, 0) starts in `coverage`.
   readonly offsets = new Int32Array(64);
+  readonly chipRows: Uint8Array;
+  readonly chipOffsets = new Int32Array(64);
+  private chipRowsUsed = 0;
   private used = 0;
   private count = 0;
+
+  constructor(chips = false) {
+    this.chipRows = new Uint8Array(chips ? 8192 : 0);
+  }
 
   // A one-pixel dot spread over 2 x 2 pixels by its sub-pixel position.
   addPoint(): number {
@@ -49,7 +104,7 @@ export class Sprites {
     const id = this.count;
     const size = Math.ceil(radius * 2 * (1 + ragged) + soft) + 1;
     this.sizes[id] = size;
-    this.offsets[id] = this.used;
+    this.chipOffsets[id] = this.chipRowsUsed;
     const half = size >> 1;
     const cos = Math.cos(angle);
     const sin = Math.sin(angle);
@@ -58,6 +113,8 @@ export class Sprites {
         const cx = half + (px + 0.5) / PHASES;
         const cy = half + (py + 0.5) / PHASES;
         for (let y = 0; y < size; y++) {
+          let first = size;
+          let last = -1;
           for (let x = 0; x < size; x++) {
             const dx = x + 0.5 - cx;
             const dy = y + 0.5 - cy;
@@ -67,9 +124,12 @@ export class Sprites {
             const distance = Math.sqrt(u * u + v * v);
             const turn = Math.atan2(v, u);
             const reach = radius * (1 + ragged * (0.6 * Math.sin(3 * turn + angle * 5) + 0.4 * Math.sin(5 * turn)));
-            // Squashed edge-on, its edge stays as soft as face-on.
-            this.coverage[this.used++] = Math.round(edge((reach - distance) / (soft / Math.sqrt(aspect)) + 0.5) * 255);
+            if (distance <= reach) {
+              first = Math.min(first, x);
+              last = x;
+            }
           }
+          this.chipRows[this.chipRowsUsed++] = last >= first ? (first << 4) | (last - first + 1) : 0;
         }
       }
     }
@@ -129,14 +189,8 @@ export class Painter {
   // behind it is hidden. -128 where nothing does.
   readonly depth: Int8Array;
   private readonly marks = new Int32Array(MAX_MARKS * 3);
+  private readonly snowTiles = new Uint32Array(Math.ceil(PIXELS / 256));
   private markCount: i32 = 0;
-  // 2 x 2 dots drawn this frame (frame index of their corner): lib/snow.ts
-  // writes these itself, as a call per dot would cost more than the dot.
-  readonly points = new Int32Array(MAX_POINTS);
-  pointCount = 0;
-  // 3 x 3 small chips drawn this frame, the same way.
-  readonly chips = new Int32Array(MAX_POINTS);
-  chipCount = 0;
   private everything = false; // the whole frame to restore next time
 
   constructor(pixels: Uint16Array, backdrop: Uint16Array, depth: Int8Array) {
@@ -147,12 +201,73 @@ export class Painter {
     this.depth = depth;
   }
 
-  // Blends sprite `id` into the settled picture itself (snow at rest on the
-  // glass, drawn once), and marks its box so the frame picks it up.
-  bake(sprites: Sprites, id: i32, px: i32, py: i32, x: i32, y: i32, colour: i32, strength: i32) {
-    if (!this.claim(x, y, sprites.sizes[id], sprites.sizes[id])) return;
+  // A matte chip has one opaque span per row, precomputed for each subpixel phase.
+  private stamp(sprites: Sprites, id: i32, px: i32, py: i32, x: i32, y: i32, colour: i32, settled: boolean) {
+    const size: i32 = sprites.sizes[id];
+    if (!this.claim(x, y, size, size)) return;
 
-    this.blendInto(this.settled, sprites, id, px, py, x, y, colour, strength);
+    const rows = sprites.chipRows;
+    const start: i32 = sprites.chipOffsets[id] + (py * PHASES + px) * size;
+    const pixels = this.pixels;
+    const backdrop = this.settled;
+    let row: i32 = y * WIDTH + x;
+    for (let j: i32 = 0; j < size; j++) {
+      const span: i32 = rows[start + j];
+      const from: i32 = row + (span >> 4);
+      const to: i32 = from + (span & 15);
+      for (let p: i32 = from; p < to; p++) pixels[p] = colour;
+      if (settled) for (let p: i32 = from; p < to; p++) backdrop[p] = colour;
+      row += WIDTH;
+    }
+  }
+
+  stampBatch(
+    sprites: Sprites,
+    ids: Int32Array,
+    xs: Int32Array,
+    ys: Int32Array,
+    count: i32,
+    colour: i32,
+    settles: boolean,
+  ) {
+    if (count === 0) return;
+
+    if (typeof stampSnowBatch === "function") {
+      stampSnowBatch(
+        this.pixels,
+        this.settled,
+        sprites.chipRows,
+        sprites.sizes,
+        sprites.chipOffsets,
+        ids,
+        xs,
+        ys,
+        this.snowTiles,
+        count,
+        WIDTH,
+        HEIGHT,
+        colour,
+        settles,
+      );
+      return;
+    }
+
+    for (let i: i32 = 0; i < count; i++) {
+      const id: i32 = ids[i];
+      const half: i32 = sprites.sizes[id] >> 1;
+      const x: i32 = xs[i];
+      const y: i32 = ys[i];
+      this.stamp(
+        sprites,
+        id,
+        (x >> 2) & (PHASES - 1),
+        (y >> 2) & (PHASES - 1),
+        (x >> 4) - half,
+        (y >> 4) - half,
+        colour,
+        settles,
+      );
+    }
   }
 
   // The settled picture back to the bare backdrop (baked snow gone); the
@@ -167,9 +282,8 @@ export class Painter {
   reload() {
     this.settled.set(this.backdrop);
     this.pixels.set(this.backdrop);
-    this.pointCount = 0;
-    this.chipCount = 0;
     this.markCount = 0;
+    this.snowTiles.fill(0);
   }
 
   // Puts the settled picture back wherever the last frame drew; after a
@@ -178,43 +292,20 @@ export class Painter {
   restore() {
     const pixels = this.pixels;
     const backdrop = this.settled;
-    if (this.everything || this.pointCount + this.chipCount * 2 + this.markCount > BUSY) {
+    if (this.everything || this.markCount > BUSY) {
       pixels.set(backdrop);
+      this.snowTiles.fill(0);
       this.everything = false;
-      this.pointCount = 0;
-      this.chipCount = 0;
       this.markCount = 0;
       return;
     }
+    if (typeof restoreSnowTiles === "function") restoreSnowTiles(pixels, backdrop, this.snowTiles);
 
-    const points = this.points;
-    // Plain counters: the compiler gives these loops unchecked array access.
-    const dots = this.pointCount;
-    for (let k = 0; k < dots; k++) {
-      const p: i32 = points[k];
-      pixels[p] = backdrop[p];
-      pixels[p + 1] = backdrop[p + 1];
-      pixels[p + WIDTH] = backdrop[p + WIDTH];
-      pixels[p + WIDTH + 1] = backdrop[p + WIDTH + 1];
+    if (typeof restoreMarks === "function") {
+      restoreMarks(pixels, backdrop, this.marks, this.markCount, WIDTH);
+      this.markCount = 0;
+      return;
     }
-    this.pointCount = 0;
-    const chips = this.chips;
-    const small = this.chipCount;
-    for (let k = 0; k < small; k++) {
-      const p: i32 = chips[k];
-      const q: i32 = p + WIDTH;
-      const r: i32 = q + WIDTH;
-      pixels[p] = backdrop[p];
-      pixels[p + 1] = backdrop[p + 1];
-      pixels[p + 2] = backdrop[p + 2];
-      pixels[q] = backdrop[q];
-      pixels[q + 1] = backdrop[q + 1];
-      pixels[q + 2] = backdrop[q + 2];
-      pixels[r] = backdrop[r];
-      pixels[r + 1] = backdrop[r + 1];
-      pixels[r + 2] = backdrop[r + 2];
-    }
-    this.chipCount = 0;
     const marks = this.marks;
     const count: i32 = this.markCount * 3;
     for (let m: i32 = 0; m < count; m += 3) {
@@ -258,6 +349,10 @@ export class Painter {
     const size: i32 = sprites.sizes[id];
     const coverage = sprites.coverage;
     let at: i32 = sprites.offsets[id] + (py * PHASES + px) * size * size;
+    if (typeof blendSprite === "function") {
+      blendSprite(pixels, coverage, at, y * WIDTH + x, size, WIDTH, colour, strength);
+      return;
+    }
     let row: i32 = y * WIDTH + x;
     for (let j: i32 = 0; j < size; j++) {
       for (let i: i32 = 0; i < size; i++) {
@@ -303,6 +398,10 @@ export class Painter {
     const pixels = this.pixels;
     const coverage = sprites.coverage;
     const at: i32 = sprites.offsets[id];
+    if (typeof glowSprite === "function") {
+      glowSprite(pixels, coverage, at, y * WIDTH + x, size, WIDTH, r, g, b, strength);
+      return;
+    }
     let row: i32 = y * WIDTH + x;
     for (let j: i32 = 0; j < size; j++) {
       const line: i32 = at + j * size;

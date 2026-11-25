@@ -8,8 +8,7 @@ export interface Globe {
   id: string;
   name: string;
   style: string;
-  // What stands in the globe, besides the snow floor and the base: snow
-  // behind a solid is hidden by it, snow landing on it rests there.
+  // What stands in the globe: a solid hides flakes that pass behind it.
   solids: Solid[];
   // Warm lights (x, y, glow radius px, strength each), with how many of
   // them (the first) flicker like a fire and which one is a street lamp
@@ -37,7 +36,7 @@ export const GLOBES: Globe[] = readGlobes(GLOBE_TEXT);
 
 // The globe shown after flashing (an index into GLOBES): a build with a
 // different one shows it, and the menu's choice is kept from then on.
-export const DEFAULT_GLOBE = 0;
+export const DEFAULT_GLOBE = 7; // Neon Noel
 
 // Where the others' windows live on the card.
 export function globePath(globe: Globe): string {
@@ -63,7 +62,7 @@ function readGlobes(text: string): Globe[] {
         back: values[at],
         front: values[at + 1],
         frontRow: values[at + 2],
-        lands: values[at + 3] === 1,
+        lands: values[at + 3] !== 0,
         outline: values.slice(at + 5, at + 5 + length),
       });
       at += 5 + length;

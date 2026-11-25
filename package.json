@@ -31,9 +31,17 @@
     "id": "yule",
     "name": "Yule",
     "entry": "src/index.tsx",
+    "compilerPlugins": [
+      "native/plugin.mjs"
+    ],
     "targets": {
       "web": true,
       "esp32": {
+        "build": {
+          "compiler": {
+            "generatedCodeOptimization": "O3"
+          }
+        },
         "boards": {
           "esp32-s3-touch-amoled-2.06": {
             "build": {
