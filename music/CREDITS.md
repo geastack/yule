@@ -3,7 +3,8 @@
 Christmas music for the snow-globe demo. Every track is public domain (US government work) or CC BY 3.0.
 The .raw files are 16 kHz mono signed 16-bit little-endian PCM: leading/trailing silence trimmed,
 0.5 s fade-in, short fade-out, capped at 4:00, loudness-normalised to about -16 LUFS.
-Originals are kept unchanged in `original/`.
+The original recordings are not in this repository; each entry below
+links its source.
 
 US Air Force band recordings are works of the US government and have no US copyright. The Air Force lists
 them on its public-domain music page (https://www.music.af.mil/Multimedia/Music/Public-Domain-Music/), and
@@ -20,7 +21,7 @@ The CC BY 3.0 tracks need the attribution line shown below wherever the demo is 
 - Performer: Kevin MacLeod (incompetech.com)
 - Licence: CC BY 3.0 (https://creativecommons.org/licenses/by/3.0/)
 - Source page: https://commons.wikimedia.org/wiki/File:Jingle_Bells_(ISRC_USUAN1100187).mp3
-- Original file: original/jingle-bells.mp3
+- Original file: jingle-bells.mp3
 - Required attribution: "Jingle Bells Kevin MacLeod (incompetech.com) Licensed under Creative Commons: By Attribution 3.0 License https://creativecommons.org/licenses/by/3.0/ (trimmed, resampled to 16 kHz mono, loudness-normalised)"
 
 ### 02-good-king-wenceslas.raw - Good King Wenceslas
@@ -29,7 +30,7 @@ The CC BY 3.0 tracks need the attribution line shown below wherever the demo is 
 - Performer: United States Air Force Band, Concert Band
 - Licence: Public domain (US government work, US Air Force)
 - Source page: https://commons.wikimedia.org/wiki/File:Good_King_Wenceslas_-_Concert_Band_-_United_States_Air_Force_Band.mp3
-- Original file: original/good-king-wenceslas.mp3
+- Original file: good-king-wenceslas.mp3
 - Note: Arranger Robert Thurston (tagged PD-USGov on Commons). Album tag lists the Singing Sergeants; not confirmed fully instrumental.
 
 ### 03-sugar-plum-fairy.raw - Dance of the Sugar Plum Fairy
@@ -38,7 +39,7 @@ The CC BY 3.0 tracks need the attribution line shown below wherever the demo is 
 - Performer: Kevin MacLeod (incompetech.com)
 - Licence: CC BY 3.0 (https://creativecommons.org/licenses/by/3.0/)
 - Source page: https://commons.wikimedia.org/wiki/File:Dance_of_the_Sugar_Plum_Fairies_(ISRC_USUAN1100270).mp3
-- Original file: original/sugar-plum-fairy.mp3
+- Original file: sugar-plum-fairy.mp3
 - Required attribution: "Dance of the Sugar Plum Fairies Kevin MacLeod (incompetech.com) Licensed under Creative Commons: By Attribution 3.0 License https://creativecommons.org/licenses/by/3.0/ (trimmed, resampled to 16 kHz mono, loudness-normalised)"
 - Note: Composition: Tchaikovsky (public domain).
 
@@ -48,7 +49,7 @@ The CC BY 3.0 tracks need the attribution line shown below wherever the demo is 
 - Performer: United States Air Force Band of the Rockies, Concert Band
 - Licence: Public domain (US government work, US Air Force)
 - Source page: https://commons.wikimedia.org/wiki/File:Silent_Nights_-_Concert_Band_-_United_States_Air_Force_Band_of_the_Rockies.mp3
-- Original file: original/silent-night.mp3
+- Original file: silent-night.mp3
 - Note: Arranger not named; rests on the Air Force's public-domain statement.
 
 ### 05-carol-of-the-bells.raw - Carol of the Bells
@@ -57,7 +58,7 @@ The CC BY 3.0 tracks need the attribution line shown below wherever the demo is 
 - Performer: United States Air Force Band of the Rockies, Concert Band
 - Licence: Public domain (US government work, US Air Force)
 - Source page: https://commons.wikimedia.org/wiki/File:Carol_of_the_Bells_-_Concert_Band_-_United_States_Air_Force_Band_of_the_Rockies.mp3
-- Original file: original/carol-of-the-bells.mp3
+- Original file: carol-of-the-bells.mp3
 - Note: Composition: Leontovych (d. 1921). Arranger not named; rests on the Air Force's public-domain statement.
 
 ### 06-waltz-of-the-flowers.raw - Waltz of the Flowers (The Nutcracker)
@@ -66,7 +67,7 @@ The CC BY 3.0 tracks need the attribution line shown below wherever the demo is 
 - Performer: United States Air Force Band, Concert Band
 - Licence: Public domain (US government work, US Air Force)
 - Source page: https://commons.wikimedia.org/wiki/File:Waltz_of_the_Flowers_-_Concert_Band_-_United_States_Air_Force_Band.mp3
-- Original file: original/waltz-of-the-flowers.mp3
+- Original file: waltz-of-the-flowers.mp3
 - Note: Arranger Lawrence Odom (tagged PD-USGov on Commons). Cut to 4:00 with a 2 s fade-out.
 
 ### 07-we-three-kings.raw - We Three Kings
@@ -75,7 +76,7 @@ The CC BY 3.0 tracks need the attribution line shown below wherever the demo is 
 - Performer: United States Air Force Band, Concert Band
 - Licence: Public domain (US government work, US Air Force)
 - Source page: https://commons.wikimedia.org/wiki/File:We_Three_Kings_of_Orient_Are_-_Concert_Band_-_United_States_Air_Force_Band.mp3
-- Original file: original/we-three-kings.mp3
+- Original file: we-three-kings.mp3
 - Note: Arranger Robert Thurston (tagged PD-USGov on Commons). Album tag lists the Singing Sergeants; not confirmed fully instrumental.
 
 ### 08-bells-of-speyer.raw - The Merry Bells of Speyer
@@ -84,7 +85,7 @@ The CC BY 3.0 tracks need the attribution line shown below wherever the demo is 
 - Performer: United States Air Force Band of the Rockies, Stellar Brass
 - Licence: Public domain (US government work, US Air Force)
 - Source page: https://commons.wikimedia.org/wiki/File:The_Merry_Bells_of_Speyer_-_Stellar_Brass_-_United_States_Air_Force_Band_of_the_Rockies.mp3
-- Original file: original/merry-bells-of-speyer.mp3
+- Original file: merry-bells-of-speyer.mp3
 - Note: Composition: Ludwig Senfl (d. 1543). Arranger not named; rests on the Air Force's public-domain statement.
 
 ### 09-carol-medley.raw - Celebration of Carols (Joy to the World, Hark the Herald Angels Sing, O Come All Ye Faithful)
@@ -93,7 +94,7 @@ The CC BY 3.0 tracks need the attribution line shown below wherever the demo is 
 - Performer: United States Air Force Band of the Rockies, Concert Band
 - Licence: Public domain (US government work, US Air Force)
 - Source page: https://commons.wikimedia.org/wiki/File:Celebration_of_Carols_-_Concert_Band_-_United_States_Air_Force_Band_of_the_Rockies.mp3
-- Original file: original/celebration-of-carols.mp3
+- Original file: celebration-of-carols.mp3
 - Note: Arranger not named; rests on the Air Force's public-domain statement.
 
 ### 10-o-holy-night.raw - O Holy Night
@@ -102,7 +103,7 @@ The CC BY 3.0 tracks need the attribution line shown below wherever the demo is 
 - Performer: United States Air Force Band of the Golden West, Concert Band
 - Licence: Public domain (US government work, US Air Force)
 - Source page: https://commons.wikimedia.org/wiki/File:Cantique_de_No%C3%ABl_(O_Holy_Night)_-_Concert_Band_-_United_States_Air_Force_Band_of_the_Golden_West.mp3
-- Original file: original/o-holy-night.mp3
+- Original file: o-holy-night.mp3
 - Note: Composition: Adolphe Adam (d. 1856). Arranger MSgt Steve Shafer.
 
 ### 11-we-wish-you.raw - We Wish You a Merry Christmas
@@ -111,5 +112,5 @@ The CC BY 3.0 tracks need the attribution line shown below wherever the demo is 
 - Performer: Kevin MacLeod (incompetech.com)
 - Licence: CC BY 3.0 (https://creativecommons.org/licenses/by/3.0/)
 - Source page: https://commons.wikimedia.org/wiki/File:We_Wish_you_a_Merry_Christmas_(ISRC_USUAN1100369).mp3
-- Original file: original/we-wish-you.mp3
+- Original file: we-wish-you.mp3
 - Required attribution: "We Wish you a Merry Christmas Kevin MacLeod (incompetech.com) Licensed under Creative Commons: By Attribution 3.0 License https://creativecommons.org/licenses/by/3.0/ (trimmed, resampled to 16 kHz mono, loudness-normalised)"

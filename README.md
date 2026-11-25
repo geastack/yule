@@ -4,12 +4,10 @@
 
 Twenty-seven Christmas snow globes on an ESP32-S3 board: the Waveshare Touch
 AMOLED 2.06 (410x502 screen, accelerometer and gyro). Hold the board like a
-globe: shake it and the snow fills the water, tilt it and the snow drifts
-to the low side, turn it over and it falls to the top of the glass. Lights
-flicker, smoke rises, trees sway in the wind, stars shoot, and a playlist of
-carols plays. It is all TypeScript, compiled ahead of time to native code:
-no native code of its own, and no browser or JavaScript engine on the
-device.
+globe. Shake it and the snow fills the water, tilt it left or right and
+the falling snow drifts that way. Lights flicker, smoke rises, trees sway in
+the wind, stars shoot, and a playlist of Christmas songs plays. It is
+written in TypeScript with GeaStack.
 
 | | | | |
 | :---: | :---: | :---: | :---: |
@@ -25,16 +23,20 @@ device.
 
 ### 1. Flash it
 
-You need Node 22+ and ESP-IDF 6.0 (`IDF_PATH` set to it). With the board on
-USB and registered as `amoled` (`npx --no-install gea setup`):
+You need Node 22+ and ESP-IDF 6.0.2, installed in `~/esp32/esp-idf-v6.0.2`
+(or with `IDF_PATH` set to it). Install the packages, register the board
+on USB as `amoled` (the setup asks for the name), then flash:
 
 ```sh
 npm ci
+npx --no-install gea setup
 npm run flash
 ```
 
-Yule is built in. To flash with another globe showing, set `DEFAULT_GLOBE`
-in `src/lib/globes.ts` (0 is Yule, 26 Ice Fishing, in the order above).
+Yule is the one globe built in. The first start shows Neon Noel if it is
+already on the card (step 2), and Yule if it is not. To start on another
+globe, set `DEFAULT_GLOBE` in `src/lib/globes.ts` (0 is Yule, 7 Neon Noel,
+26 Ice Fishing, in the order above).
 
 ### 2. Fill the microSD card
 
@@ -53,17 +55,16 @@ music box still work.
 
 - **Shake** the board: the harder you shake, the more snow lifts, up to a
   globe full of it. When you stop, the water swirls on and the snow
-  tumbles down in its own time (15-30 s).
-- **Tilt** it: the snow drifts slowly to the low side and heaps against the
-  glass; turn it upside down and it falls to the top. Lying flat, it
-  settles against the back. A slow turn never counts as a shake.
+  tumbles down in its own time.
+- **Tilt** it left or right: the falling snow drifts slowly to the low
+  side. A slow turn never counts as a shake.
 - **Swipe** sideways across the globe for the next or previous globe.
-  **Drag** slowly to stir the water with your finger; **tap** for a little
-  whirlpool.
+  **Drag** slowly to push the snow with your finger; **tap** the glass to
+  make the settled snow hop.
 - **Tap the wooden base** (or press the USER button) for the menu: pick a
-  globe, a song (the music box, wound by shaking, or eleven carols), or the
-  settings (music, volume, wind, a new globe every 5 minutes). The USER
-  button steps back; your choices are kept.
+  globe, a song (the music box, wound by shaking, or eleven Christmas
+  songs), or the settings (music, volume, wind, a new globe every 5
+  minutes). The USER button steps back; your choices are kept.
 
 ### 4. Preview it in a browser
 
@@ -72,19 +73,26 @@ npm run dev
 ```
 
 The preview reads the globes from `.gea/sd/yule` after a bake. It lies
-face-up with no music; tilt it from the console, e.g.
-`__gea_Accelerometer.feel = [9.8, 0, 0]` to stand it upright.
+face-up with no music. To tilt it, set `__gea_Accelerometer.feel` in the
+console (m/s² along the board's x, y and z; y runs across the screen), e.g.
+`__gea_Accelerometer.feel = [0, 4, -9]`.
 
-## Numbers
+### 5. Run it on a Mac
 
-- 24-27 fps with the snow settled, 15 in a gust, about 11 right after a hard
-  shake or a switch, back to 20 within 15-20 s.
-- A globe switch takes about 0.4 s; a song plays on through it.
-- The firmware is 3.2 MB. Each globe is 282 KB on the card (7.3 MB for 26),
-  and the songs are 47 MB.
+Yule also builds as a Mac app (needs Xcode). The app takes the globes
+and songs from `.gea/sd`, so bake them (step 2) before building:
 
-How it all works (the water, the snow, the tracing of each globe, the card,
-memory): [docs/HOW-IT-WORKS.md](docs/HOW-IT-WORKS.md).
+```sh
+npx --no-install gea run --target macos
+```
+
+It opens `dist/macos/yule/Yule.app`. A Mac has no accelerometer, so there
+the globe stands still: stir and swipe it with the mouse.
+
+## How it works
+
+[docs/HOW-IT-WORKS.md](docs/HOW-IT-WORKS.md) covers the water, the snow, the
+tracing of each globe, the card and memory.
 
 Music credits: [music/CREDITS.md](music/CREDITS.md). Three songs are by Kevin
 MacLeod under CC BY 3.0, which requires credit wherever this is shown; the
