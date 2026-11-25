@@ -9,6 +9,8 @@ the falling snow drifts that way. Lights flicker, smoke rises, trees sway in
 the wind, stars shoot, and a playlist of Christmas songs plays. It is
 written in TypeScript with GeaStack.
 
+https://github.com/user-attachments/assets/0cc5c18a-e633-4939-96bd-07bc670aff09
+
 | | | | |
 | :---: | :---: | :---: | :---: |
 | ![Yule](docs/yule.jpg)<br>Yule | ![Gingerbread](docs/gingerbread.jpg)<br>Gingerbread | ![Nordic Night](docs/nordic.jpg)<br>Nordic Night | ![Silent Chapel](docs/chapel.jpg)<br>Silent Chapel |
