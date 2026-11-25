@@ -1,9 +1,8 @@
 /*
- * The menu pages. The font atlas bakes each family-and-size pair it finds on
- * a single-class rule, so each type style names its own family and size.
+ * Illustrated winter book, set in the original Hanken Grotesk family.
  */
 
-.page {
+.menu-page {
   position: absolute;
   left: 0;
   top: 0;
@@ -12,219 +11,294 @@
   box-sizing: border-box;
   display: flex;
   flex-direction: column;
-  padding: 28px 28px 24px 28px;
+  padding: 20px 26px;
+  gap: 12px;
+  background-color: #10101e;
+  --menu-text: #faf4fb;
+  --menu-muted: #bdb3cd;
+  --menu-accent: #f0cbe0;
+  --menu-rule: #3c344d;
+  --menu-surface: #242033;
+  --menu-pressed: #41344d;
+}
+
+.menu-home {
+  align-items: center;
+  padding: 18px 42px 14px;
+  gap: 0;
+}
+
+.menu-title {
+  font-family: "Hanken XB";
+  font-size: 61px;
+  color: var(--menu-text);
+  text-align: center;
+}
+
+.menu-illustration {
+  width: 100%;
+  height: 166px;
+  margin-top: 5px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.menu-rule {
+  width: 55px;
+  height: 1px;
+  background-color: var(--menu-rule);
+}
+
+.menu-frame {
+  width: 164px;
+  height: 164px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #080810;
+  border: 1px solid #615270;
+  border-radius: 6px;
+}
+
+.menu-hero-art {
+  width: 152px;
+  height: 152px;
+}
+
+.menu-caption {
+  margin-top: 6px;
+  color: var(--menu-text);
+  font-family: "Hanken SB";
+  font-size: 27px;
+  white-space: nowrap;
+  text-align: center;
+}
+
+.menu-home-actions {
+  width: 100%;
+  margin-top: 17px;
+  display: flex;
+  flex-direction: column;
   gap: 10px;
-  background-color: var(--bg);
 }
 
-/* ---- Type ---- */
-
-.t-title {
-  font-family: "Hanken XB";
-  font-size: 40px;
-  color: var(--text);
-}
-
-.t-heading {
-  font-family: "Hanken XB";
-  font-size: 22px;
-  color: var(--text);
-}
-
-.t-entry {
-  font-family: "Hanken SB";
-  font-size: 19px;
-  white-space: nowrap;
-  color: var(--text);
-}
-
-.t-detail {
-  font-family: "Hanken";
-  font-size: 14px;
-  white-space: nowrap;
-  color: var(--text-2);
-}
-
-.t-button {
-  font-family: "Hanken SB";
-  font-size: 15px;
-  white-space: nowrap;
-  color: var(--text);
-}
-
-.t-button-dark {
-  font-family: "Hanken SB";
-  font-size: 15px;
-  white-space: nowrap;
-  color: var(--ink);
-}
-
-.t-gold {
-  color: var(--gold);
-}
-
-/* ---- Home ---- */
-
-.home-title {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding: 8px 0 14px 0;
-}
-
-.entry {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  height: 70px;
-  padding: 0 18px;
-  gap: 4px;
-  background-color: var(--surface);
-  border-left: 3px solid var(--gold);
-}
-
-.done {
+.menu-browse,
+.menu-link,
+.menu-done,
+.menu-back,
+.menu-turn,
+.menu-step,
+.menu-switch {
   display: flex;
   align-items: center;
   justify-content: center;
-  height: 52px;
-  margin-top: auto;
-  background-color: var(--gold);
 }
 
-/* ---- Lists ---- */
+.menu-browse {
+  height: 48px;
+  background-color: #653a59;
+  border: 1px solid #8f5d7f;
+  border-radius: 7px;
+}
 
-.header {
+.menu-primary-label {
+  font-family: "Hanken SB";
+  font-size: 16px;
+  color: #fff5fa;
+}
+
+.menu-secondary {
   display: flex;
   flex-direction: row;
-  align-items: center;
-  gap: 16px;
+  gap: 10px;
+}
+
+.menu-link {
+  flex: 1;
   height: 44px;
+  background-color: var(--menu-surface);
+  border: 1px solid var(--menu-rule);
+  border-radius: 7px;
 }
 
-.back {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  height: 40px;
-  padding: 0 16px;
-  background-color: var(--surface);
+.menu-done {
+  height: 42px;
+  width: 100%;
+  margin-top: auto;
 }
 
-.rows {
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
+.menu-return {
+  font-family: "Hanken SB";
+  font-size: 14px;
+  color: var(--menu-muted);
 }
 
-.row {
+.menu-header {
   display: flex;
   flex-direction: row;
   align-items: center;
+  justify-content: space-between;
+  height: 66px;
+  border-bottom: 1px solid var(--menu-rule);
+}
+
+.menu-heading {
+  font-family: "Hanken XB";
+  font-size: 35px;
+  color: var(--menu-text);
+  white-space: nowrap;
+}
+
+.menu-control {
+  font-family: "Hanken SB";
+  font-size: 15px;
+  color: var(--menu-text);
+  white-space: nowrap;
+}
+
+.menu-back,
+.menu-turn,
+.menu-step,
+.menu-switch {
+  border: 1px solid var(--menu-rule);
+  background-color: var(--menu-surface);
+  border-radius: 7px;
+}
+
+.menu-back {
+  width: 70px;
+  height: 40px;
+}
+
+.menu-rows,
+.menu-settings {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.menu-row,
+.menu-setting {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding: 0 12px;
+  gap: 12px;
+  border-bottom: 1px solid var(--menu-rule);
+}
+
+.menu-row {
   height: 58px;
-  gap: 14px;
-  padding: 0 14px 0 0;
-  background-color: var(--surface);
 }
 
-.row-on {
-  background-color: var(--chosen);
+.menu-row-on {
+  background-color: #32243b;
+  border-radius: 6px;
 }
 
-/* Touched: lit at once, before the finger lifts. */
-.entry:active,
-.row:active,
-.setting:active,
-.back:active,
-.turn:active,
-.step:active {
-  background-color: var(--pressed);
-}
-
-.done:active {
-  background-color: var(--gold-pressed);
-}
-
-.row-blank {
+.menu-row-blank {
   opacity: 0;
 }
 
-.mark {
-  width: 4px;
-  height: 58px;
-  background-color: var(--line);
+.menu-thumbnail {
+  width: 42px;
+  height: 42px;
+  border-radius: 4px;
+  background-color: #080810;
 }
 
-.mark-on {
-  background-color: var(--gold);
-}
-
-.row-text {
+.menu-item-text {
+  flex: 1;
+  min-width: 0;
   display: flex;
   flex-direction: column;
-  gap: 3px;
+  gap: 2px;
   overflow: hidden;
 }
 
-.pager {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: space-between;
+.menu-item-title {
+  font-family: "Hanken SB";
+  font-size: 17px;
+  color: var(--menu-text);
+  white-space: nowrap;
+}
+
+.menu-detail {
+  font-family: "Hanken";
+  font-size: 13px;
+  color: var(--menu-muted);
+  white-space: nowrap;
+}
+
+.menu-row-status {
+  font-family: "Hanken SB";
+  font-size: 13px;
+  color: var(--menu-accent);
+  white-space: nowrap;
+}
+
+.menu-pager {
   margin-top: auto;
   height: 44px;
-}
-
-.turn {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 96px;
-  height: 44px;
-  background-color: var(--surface);
-}
-
-.turn-off {
-  opacity: 0.3;
-}
-
-/* ---- Settings ---- */
-
-.setting {
   display: flex;
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
-  height: 64px;
-  padding: 0 14px 0 18px;
-  background-color: var(--surface);
 }
 
-.switch {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 64px;
-  height: 36px;
-  background-color: var(--line);
+.menu-turn {
+  height: 42px;
+  width: 94px;
 }
 
-.switch-on {
-  background-color: var(--gold);
+.menu-turn-off {
+  opacity: 0.35;
 }
 
-.stepper {
+.menu-setting {
+  justify-content: space-between;
+  height: 68px;
+}
+
+.menu-switch {
+  width: 66px;
+  height: 40px;
+}
+
+.menu-switch-on {
+  background-color: #50334c;
+  border-color: #775471;
+}
+
+.menu-stepper {
   display: flex;
   flex-direction: row;
   align-items: center;
-  gap: 14px;
+  gap: 8px;
 }
 
-.step {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 44px;
-  height: 36px;
-  background-color: var(--line);
+.menu-step {
+  width: 40px;
+  height: 42px;
+}
+
+.menu-volume {
+  text-align: center;
+  width: 52px;
+  font-family: "Hanken SB";
+  font-size: 16px;
+  color: var(--menu-text);
+}
+
+.menu-browse:active,
+.menu-link:active,
+.menu-done:active,
+.menu-back:active,
+.menu-row:active,
+.menu-setting:active,
+.menu-turn:active,
+.menu-step:active {
+  background-color: var(--menu-pressed);
 }
